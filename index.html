@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCN Executive Transfers | Premier Taxi & VTC Services Barcelona</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gold-glow {
+            box-shadow: 0 0 25px -5px rgba(234, 179, 8, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-yellow-500 selection:text-slate-950">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-500 to-amber-300 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg">
+                        <i data-lucide="car"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight text-white block leading-none">BCN <span class="text-yellow-500">EXECUTIVE</span></span>
+                        <span class="text-[10px] tracking-widest uppercase text-slate-400 font-medium">Private Transfers Catalonia</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#estimator" class="text-slate-300 hover:text-yellow-500 transition-colors" data-i18n="nav_calculator">Fare Estimator</a>
+                    <a href="#fleet" class="text-slate-300 hover:text-yellow-500 transition-colors" data-i18n="nav_fleet">Our Fleet</a>
+                    <a href="#services" class="text-slate-300 hover:text-yellow-500 transition-colors" data-i18n="nav_services">Services</a>
+                    <a href="#why-us" class="text-slate-300 hover:text-yellow-500 transition-colors" data-i18n="nav_why">Why Us</a>
+                </nav>
+
+                <!-- Actions & Language Switcher -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative inline-block text-left">
+                        <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg px-2.5 py-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none cursor-pointer">
+                            <option value="en">🇬🇧 EN</option>
+                            <option value="es">🇪🇸 ES</option>
+                            <option value="ca">🏴 CA</option>
+                        </select>
+                    </div>
+
+                    <!-- GitHub Host Guide Button -->
+                    <button onclick="toggleGithubModal(true)" class="hidden sm:inline-flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold px-3 py-2 rounded-lg transition-all">
+                        <i data-lucide="github" class="w-4 h-4 text-yellow-500"></i>
+                        <span data-i18n="gh_btn">Host on GitHub</span>
+                    </button>
+
+                    <!-- Mobile Menu Trigger -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Container -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#estimator" onclick="closeMobileMenu()" class="block text-slate-300 hover:text-yellow-500 py-2 text-base font-medium" data-i18n="nav_calculator">Fare Estimator</a>
+            <a href="#fleet" onclick="closeMobileMenu()" class="block text-slate-300 hover:text-yellow-500 py-2 text-base font-medium" data-i18n="nav_fleet">Our Fleet</a>
+            <a href="#services" onclick="closeMobileMenu()" class="block text-slate-300 hover:text-yellow-500 py-2 text-base font-medium" data-i18n="nav_services">Services</a>
+            <button onclick="toggleGithubModal(true); closeMobileMenu()" class="w-full text-left flex items-center space-x-2 text-yellow-500 py-2 font-medium">
+                <i data-lucide="github" class="w-4 h-4"></i>
+                <span data-i18n="gh_btn">Host Free on GitHub Pages</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO & INTERACTIVE CALCULATOR SECTION -->
+    <section id="estimator" class="pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden">
+        <!-- Background Grid & Glow Effect -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Intro Text -->
+                <div class="lg:col-span-5 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 text-xs font-semibold mb-6">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span data-i18n="hero_badge">Official VTC & Licensed Drivers</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-none mb-6">
+                        <span data-i18n="hero_title_1">Premium Private</span> <br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600" data-i18n="hero_title_2">Transfers Barcelona</span>
+                    </h1>
+                    <p class="text-slate-400 text-base sm:text-lg mb-8 leading-relaxed" data-i18n="hero_subtitle">
+                        Fixed-rate airport transfers, city rides, and custom long-distance journeys across Catalonia and Andorra. Stress-free booking with zero hidden charges.
+                    </p>
+
+                    <!-- Trust Stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-800 text-left">
+                        <div>
+                            <p class="text-2xl font-extrabold text-white">100%</p>
+                            <p class="text-xs text-slate-400" data-i18n="stat_fixed">Fixed Pricing</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-extrabold text-yellow-500">24/7</p>
+                            <p class="text-xs text-slate-400" data-i18n="stat_support">Direct Support</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-extrabold text-white">4.9★</p>
+                            <p class="text-xs text-slate-400" data-i18n="stat_rating">Client Rating</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Widget (Right) -->
+                <div class="lg:col-span-7">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-2xl gold-glow border border-slate-700/60 relative">
+                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-700/50">
+                            <div>
+                                <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="calculator" class="w-5 h-5 text-yellow-500"></i>
+                                    <span data-i18n="calc_title">Instant Route & Fare Calculator</span>
+                                </h2>
+                                <p class="text-xs text-slate-400 mt-0.5" data-i18n="calc_sub">Select route presets or calculate custom distances</p>
+                            </div>
+                            <span class="text-xs bg-slate-800 text-yellow-400 px-2.5 py-1 rounded-full border border-slate-700 font-mono" id="liveKmTag">0 km</span>
+                        </div>
+
+                        <form id="bookingForm" onsubmit="handleBooking(event)" class="space-y-5">
+                            
+                            <!-- Popular Quick Presets -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" data-i18n="lbl_presets">Quick Preset Routes</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                    <button type="button" onclick="applyPreset('airport_t1', 'bcn_center')" class="preset-btn text-xs bg-slate-800/80 hover:bg-yellow-500/20 hover:border-yellow-500/50 border border-slate-700 text-slate-300 p-2 rounded-xl text-left transition-all">
+                                        <div class="font-bold text-white">BCN T1 ➔ City</div>
+                                        <div class="text-[10px] text-slate-400">16 km ~ €45</div>
+                                    </button>
+                                    <button type="button" onclick="applyPreset('bcn_center', 'sitges')" class="preset-btn text-xs bg-slate-800/80 hover:bg-yellow-500/20 hover:border-yellow-500/50 border border-slate-700 text-slate-300 p-2 rounded-xl text-left transition-all">
+                                        <div class="font-bold text-white">BCN ➔ Sitges</div>
+                                        <div class="text-[10px] text-slate-400">38 km ~ €85</div>
+                                    </button>
+                                    <button type="button" onclick="applyPreset('bcn_center', 'girona')" class="preset-btn text-xs bg-slate-800/80 hover:bg-yellow-500/20 hover:border-yellow-500/50 border border-slate-700 text-slate-300 p-2 rounded-xl text-left transition-all">
+                                        <div class="font-bold text-white">BCN ➔ Girona</div>
+                                        <div class="text-[10px] text-slate-400">100 km ~ €180</div>
+                                    </button>
+                                    <button type="button" onclick="applyPreset('bcn_center', 'andorra')" class="preset-btn text-xs bg-slate-800/80 hover:bg-yellow-500/20 hover:border-yellow-500/50 border border-slate-700 text-slate-300 p-2 rounded-xl text-left transition-all">
+                                        <div class="font-bold text-white">BCN ➔ Andorra</div>
+                                        <div class="text-[10px] text-slate-400">200 km ~ €320</div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Inputs Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Origin -->
+                                <div class="relative">
+                                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_origin">Pickup Location</label>
+                                    <div class="relative">
+                                        <i data-lucide="map-pin" class="w-4 h-4 text-yellow-500 absolute left-3 top-3.5"></i>
+                                        <select id="originSelect" onchange="calculateFare()" class="w-full bg-slate-900/90 border border-slate-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none">
+                                            <option value="bcn_center">Plaça de Catalunya / BCN City Center</option>
+                                            <option value="airport_t1">Barcelona Airport El Prat (T1)</option>
+                                            <option value="airport_t2">Barcelona Airport El Prat (T2)</option>
+                                            <option value="sants">Estació de Sants (Train Station)</option>
+                                            <option value="cruise_port">Port de Barcelona (Cruise Terminal)</option>
+                                            <option value="sitges">Sitges</option>
+                                            <option value="girona">Girona City / Airport</option>
+                                            <option value="andorra">Andorra la Vella</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Destination -->
+                                <div class="relative">
+                                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_destination">Destination</label>
+                                    <div class="relative">
+                                        <i data-lucide="navigation" class="w-4 h-4 text-yellow-500 absolute left-3 top-3.5"></i>
+                                        <select id="destSelect" onchange="calculateFare()" class="w-full bg-slate-900/90 border border-slate-700 text-white text-sm rounded-xl pl-9 pr-3 py-2.5 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none">
+                                            <option value="airport_t1">Barcelona Airport El Prat (T1)</option>
+                                            <option value="bcn_center">Plaça de Catalunya / BCN City Center</option>
+                                            <option value="airport_t2">Barcelona Airport El Prat (T2)</option>
+                                            <option value="sants">Estació de Sants (Train Station)</option>
+                                            <option value="cruise_port">Port de Barcelona (Cruise Terminal)</option>
+                                            <option value="sitges">Sitges</option>
+                                            <option value="girona">Girona City / Airport</option>
+                                            <option value="andorra">Andorra la Vella</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date and Time Picker -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_date">Pickup Date</label>
+                                    <input type="date" id="pickupDate" required onchange="calculateFare()" class="w-full bg-slate-900/90 border border-slate-700 text-white text-sm rounded-xl px-3 py-2.5 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5" data-i18n="lbl_time">Pickup Time</label>
+                                    <input type="time" id="pickupTime" required onchange="calculateFare()" class="w-full bg-slate-900/90 border border-slate-700 text-white text-sm rounded-xl px-3 py-2.5 focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <!-- Vehicle Class Selector -->
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" data-i18n="lbl_vehicle">Select Vehicle Tier</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="vehicleClass" value="standard" checked onchange="calculateFare()" class="peer hidden">
+                                        <div class="bg-slate-900/80 border border-slate-700 peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 p-3 rounded-2xl text-center transition-all hover:border-slate-500">
+                                            <i data-lucide="car" class="w-5 h-5 mx-auto mb-1 text-slate-400 peer-checked:text-yellow-500"></i>
+                                            <div class="font-bold text-xs text-white">Sedan</div>
+                                            <div class="text-[10px] text-slate-400">Max 4 Pax</div>
+                                        </div>
+                                    </label>
+
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="vehicleClass" value="executive" onchange="calculateFare()" class="peer hidden">
+                                        <div class="bg-slate-900/80 border border-slate-700 peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 p-3 rounded-2xl text-center transition-all hover:border-slate-500">
+                                            <i data-lucide="sparkles" class="w-5 h-5 mx-auto mb-1 text-slate-400 peer-checked:text-yellow-500"></i>
+                                            <div class="font-bold text-xs text-white">VIP Executive</div>
+                                            <div class="text-[10px] text-slate-400">Mercedes E Class</div>
+                                        </div>
+                                    </label>
+
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="vehicleClass" value="van" onchange="calculateFare()" class="peer hidden">
+                                        <div class="bg-slate-900/80 border border-slate-700 peer-checked:border-yellow-500 peer-checked:bg-yellow-500/10 p-3 rounded-2xl text-center transition-all hover:border-slate-500">
+                                            <i data-lucide="users" class="w-5 h-5 mx-auto mb-1 text-slate-400 peer-checked:text-yellow-500"></i>
+                                            <div class="font-bold text-xs text-white">Minivan VIP</div>
+                                            <div class="text-[10px] text-slate-400">Up to 7 Pax</div>
+                                        </div>
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <!-- Surcharges & Extras -->
+                            <div class="flex items-center justify-between text-xs bg-slate-900/50 p-3 rounded-xl border border-slate-800">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" id="childSeatCheck" onchange="calculateFare()" class="rounded bg-slate-800 border-slate-700 text-yellow-500 focus:ring-yellow-500">
+                                    <span class="text-slate-300" data-i18n="opt_child_seat">Child / Infant Seat (+€5)</span>
+                                </label>
+                                <span id="nightRateBadge" class="hidden text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full" data-i18n="badge_night">Night Fare Applied</span>
+                            </div>
+
+                            <!-- Price Breakdown & Instant WhatsApp Action -->
+                            <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-4 rounded-2xl border border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div>
+                                    <p class="text-xs text-slate-400 font-medium uppercase tracking-wider" data-i18n="lbl_total_price">Estimated Fixed Price</p>
+                                    <div class="flex items-baseline space-x-1">
+                                        <span class="text-3xl font-black text-yellow-500" id="totalPrice">€45</span>
+                                        <span class="text-xs text-slate-400" data-i18n="lbl_vat">All Inclusive</span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2 group">
+                                    <i data-lucide="message-square" class="w-5 h-5 fill-current"></i>
+                                    <span data-i18n="btn_book_whatsapp">Book via WhatsApp</span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FLEET SHOWCASE SECTION -->
+    <section id="fleet" class="py-20 bg-slate-900/60 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-yellow-500 uppercase tracking-widest mb-2" data-i18n="fleet_subtitle">Our Fleet Tiers</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="fleet_title">Tailored Fleet for Every Transfer Need</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Fleet Item 1 -->
+                <div class="glass-panel rounded-3xl p-6 relative flex flex-col justify-between hover:border-yellow-500/50 transition-all">
+                    <div>
+                        <div class="h-44 rounded-2xl bg-slate-800/80 mb-6 flex items-center justify-center overflow-hidden border border-slate-700">
+                            <!-- Visual Graphic for Sedan -->
+                            <div class="text-center">
+                                <i data-lucide="car" class="w-16 h-16 text-slate-400 mx-auto mb-2"></i>
+                                <span class="text-xs text-slate-500 font-mono">Skoda Superb / Toyota Camry</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Standard Sedan</h3>
+                        <p class="text-slate-400 text-xs mb-4">Comfortable and fuel-efficient transfers ideal for solo travelers, couples, or small family transfers.</p>
+                        
+                        <div class="flex items-center space-x-4 text-xs text-slate-300 mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="user" class="w-4 h-4 text-yellow-500"></i> Max 4</span>
+                            <span class="flex items-center gap-1"><i data-lucide="briefcase" class="w-4 h-4 text-yellow-500"></i> 3 Luggage</span>
+                            <span class="flex items-center gap-1"><i data-lucide="wifi" class="w-4 h-4 text-yellow-500"></i> Free Wi-Fi</span>
+                        </div>
+                    </div>
+                    <a href="#estimator" class="w-full text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all" data-i18n="btn_select">Select Fleet Tier</a>
+                </div>
+
+                <!-- Fleet Item 2 (VIP Featured) -->
+                <div class="glass-panel rounded-3xl p-6 relative flex flex-col justify-between border-2 border-yellow-500 gold-glow">
+                    <span class="absolute -top-3.5 right-6 bg-yellow-500 text-slate-950 font-extrabold text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-md">Most Popular</span>
+                    <div>
+                        <div class="h-44 rounded-2xl bg-slate-800/80 mb-6 flex items-center justify-center overflow-hidden border border-slate-700">
+                            <div class="text-center">
+                                <i data-lucide="sparkles" class="w-16 h-16 text-yellow-500 mx-auto mb-2"></i>
+                                <span class="text-xs text-slate-400 font-mono">Mercedes-Benz E-Class / Audi A6</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Executive VIP Class</h3>
+                        <p class="text-slate-400 text-xs mb-4">Unmatched luxury for corporate executives, VIP events, or special occasions requiring total discretion.</p>
+                        
+                        <div class="flex items-center space-x-4 text-xs text-slate-300 mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="user" class="w-4 h-4 text-yellow-500"></i> Max 3</span>
+                            <span class="flex items-center gap-1"><i data-lucide="briefcase" class="w-4 h-4 text-yellow-500"></i> 3 Luggage</span>
+                            <span class="flex items-center gap-1"><i data-lucide="droplet" class="w-4 h-4 text-yellow-500"></i> Water Included</span>
+                        </div>
+                    </div>
+                    <a href="#estimator" class="w-full text-center py-2.5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-slate-950 text-xs font-bold transition-all" data-i18n="btn_select">Select Fleet Tier</a>
+                </div>
+
+                <!-- Fleet Item 3 -->
+                <div class="glass-panel rounded-3xl p-6 relative flex flex-col justify-between hover:border-yellow-500/50 transition-all">
+                    <div>
+                        <div class="h-44 rounded-2xl bg-slate-800/80 mb-6 flex items-center justify-center overflow-hidden border border-slate-700">
+                            <div class="text-center">
+                                <i data-lucide="users" class="w-16 h-16 text-slate-400 mx-auto mb-2"></i>
+                                <span class="text-xs text-slate-500 font-mono">Mercedes-Benz V-Class / Vito</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Executive Minivan</h3>
+                        <p class="text-slate-400 text-xs mb-4">Spacious capacity for larger group transfers, ski equipment for Andorra, or extra cruise baggage.</p>
+                        
+                        <div class="flex items-center space-x-4 text-xs text-slate-300 mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="user" class="w-4 h-4 text-yellow-500"></i> Max 7</span>
+                            <span class="flex items-center gap-1"><i data-lucide="briefcase" class="w-4 h-4 text-yellow-500"></i> 7 Luggage</span>
+                            <span class="flex items-center gap-1"><i data-lucide="armchair" class="w-4 h-4 text-yellow-500"></i> Leather Seats</span>
+                        </div>
+                    </div>
+                    <a href="#estimator" class="w-full text-center py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all" data-i18n="btn_select">Select Fleet Tier</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE SERVICES -->
+    <section id="services" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-yellow-500 uppercase tracking-widest mb-2" data-i18n="srv_subtitle">What We Offer</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="srv_title">Tailored Private Mobility Solutions</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Service 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center mb-4">
+                        <i data-lucide="plane-takeoff" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="srv1_title">Airport Transfers</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="srv1_desc">Real-time flight tracking, Meet & Greet with name signs inside Terminal 1 & 2 arrival halls.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center mb-4">
+                        <i data-lucide="building" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="srv2_title">Corporate & Events</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="srv2_desc">Professional chauffeured transport for MWC, congresses, business meetings, and VIP guests.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center mb-4">
+                        <i data-lucide="map" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="srv3_title">Long Distance</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="srv3_desc">Direct door-to-door trips to Costa Brava, Sitges, Girona, Tarragona, Valencia, and Andorra.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-slate-700 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center mb-4">
+                        <i data-lucide="clock" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="srv4_title">Hourly Hire</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" data-i18n="srv4_desc">Dedicated driver at your service for city shopping, sightseeing tours, or multi-stop itineraries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <span class="text-lg font-extrabold text-white">BCN <span class="text-yellow-500">EXECUTIVE</span></span>
+                    <p class="text-xs text-slate-500 mt-1">© 2026 BCN Executive Transfers. Licensed VTC Transport Catalonia.</p>
+                </div>
+
+                <div class="flex items-center space-x-6 text-xs text-slate-400">
+                    <button onclick="toggleGithubModal(true)" class="hover:text-yellow-500 flex items-center gap-1.5 transition-colors">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                        <span>Publish on GitHub Pages Guide</span>
+                    </button>
+                    <a href="tel:+34600000000" class="hover:text-yellow-500 transition-colors">+34 600 000 000</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE GITHUB PAGES HOSTING GUIDE MODAL -->
+    <div id="githubModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <!-- Modal Close Button -->
+            <button onclick="toggleGithubModal(false)" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-800">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-yellow-500/10 text-yellow-500 flex items-center justify-center">
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-white">Free GitHub Pages Hosting Guide</h3>
+                    <p class="text-xs text-slate-400">Publish this exact VTC booking website live in 3 simple steps</p>
+                </div>
+            </div>
+
+            <!-- Steps Progress -->
+            <div class="space-y-6">
+                <!-- Step 1 -->
+                <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <span class="w-6 h-6 rounded-full bg-yellow-500 text-slate-950 text-xs font-bold flex items-center justify-center">1</span>
+                        <h4 class="font-bold text-white text-sm">Create a New Repository</h4>
+                    </div>
+                    <p class="text-xs text-slate-400 pl-9">
+                        Go to <a href="https://github.com/new" target="_blank" class="text-yellow-500 underline">github.com/new</a>. Name your repository (e.g., <code class="bg-slate-800 px-1 py-0.5 rounded text-yellow-300">bcn-vtc-transfers</code>), set it to **Public**, and click **Create repository**.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <span class="w-6 h-6 rounded-full bg-yellow-500 text-slate-950 text-xs font-bold flex items-center justify-center">2</span>
+                        <h4 class="font-bold text-white text-sm">Upload index.html File</h4>
+                    </div>
+                    <p class="text-xs text-slate-400 pl-9 mb-2">
+                        Inside your new repo, click **Add file ➔ Create new file**. Name the file exactly <code class="bg-slate-800 px-1.5 py-0.5 rounded text-yellow-400 font-mono">index.html</code>. Paste this complete website code and click **Commit changes**.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <span class="w-6 h-6 rounded-full bg-yellow-500 text-slate-950 text-xs font-bold flex items-center justify-center">3</span>
+                        <h4 class="font-bold text-white text-sm">Enable GitHub Pages</h4>
+                    </div>
+                    <p class="text-xs text-slate-400 pl-9">
+                        Navigate to **Settings ➔ Pages** (left sidebar). Under *Build and deployment*, set Source to **Deploy from a branch**, pick branch **main** / **root**, and click **Save**. Your site will be live at <code class="bg-slate-800 text-yellow-400 px-1.5 py-0.5 rounded">https://yourusername.github.io/bcn-vtc-transfers/</code>!
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-800 flex justify-end">
+                <button onclick="toggleGithubModal(false)" class="bg-yellow-500 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs hover:bg-yellow-400 transition-all">
+                    Got it, close guide
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Preset Distances in KM (Barcelona & Catalonia region matrix)
+        const distanceMatrix = {
+            'bcn_center-airport_t1': 16,
+            'bcn_center-airport_t2': 14,
+            'bcn_center-sants': 4,
+            'bcn_center-cruise_port': 5,
+            'bcn_center-sitges': 38,
+            'bcn_center-girona': 102,
+            'bcn_center-andorra': 198,
+            'airport_t1-sitges': 28,
+            'airport_t1-girona': 115,
+            'airport_t1-andorra': 208,
+            'airport_t2-sitges': 30,
+        };
+
+        // Translations Data
+        const translations = {
+            en: {
+                nav_calculator: "Fare Estimator",
+                nav_fleet: "Our Fleet",
+                nav_services: "Services",
+                nav_why: "Why Us",
+                gh_btn: "Host on GitHub",
+                hero_badge: "Official VTC & Licensed Drivers",
+                hero_title_1: "Premium Private",
+                hero_title_2: "Transfers Barcelona",
+                hero_subtitle: "Fixed-rate airport transfers, city rides, and custom long-distance journeys across Catalonia and Andorra. Stress-free booking with zero hidden charges.",
+                stat_fixed: "Fixed Pricing",
+                stat_support: "Direct Support",
+                stat_rating: "Client Rating",
+                calc_title: "Instant Route & Fare Calculator",
+                calc_sub: "Select route presets or calculate custom distances",
+                lbl_presets: "Quick Preset Routes",
+                lbl_origin: "Pickup Location",
+                lbl_destination: "Destination",
+                lbl_date: "Pickup Date",
+                lbl_time: "Pickup Time",
+                lbl_vehicle: "Select Vehicle Tier",
+                opt_child_seat: "Child / Infant Seat (+€5)",
+                badge_night: "Night Fare Applied",
+                lbl_total_price: "Estimated Fixed Price",
+                lbl_vat: "All Inclusive",
+                btn_book_whatsapp: "Book via WhatsApp",
+                fleet_subtitle: "Our Fleet Tiers",
+                fleet_title: "Tailored Fleet for Every Transfer Need",
+                btn_select: "Select Fleet Tier",
+                srv_subtitle: "What We Offer",
+                srv_title: "Tailored Private Mobility Solutions",
+                srv1_title: "Airport Transfers",
+                srv1_desc: "Real-time flight tracking, Meet & Greet with name signs inside Terminal 1 & 2 arrival halls.",
+                srv2_title: "Corporate & Events",
+                srv2_desc: "Professional chauffeured transport for MWC, congresses, business meetings, and VIP guests.",
+                srv3_title: "Long Distance",
+                srv3_desc: "Direct door-to-door trips to Costa Brava, Sitges, Girona, Tarragona, Valencia, and Andorra.",
+                srv4_title: "Hourly Hire",
+                srv4_desc: "Dedicated driver at your service for city shopping, sightseeing tours, or multi-stop itineraries."
+            },
+            es: {
+                nav_calculator: "Calculadora de Tarifa",
+                nav_fleet: "Nuestra Flota",
+                nav_services: "Servicios",
+                nav_why: "Por Qué Elegirnos",
+                gh_btn: "Publicar en GitHub",
+                hero_badge: "Conductores VTC Licenciados",
+                hero_title_1: "Transfers Privados",
+                hero_title_2: "De Lujo en Barcelona",
+                hero_subtitle: "Traslados al aeropuerto, desplazamientos urbanos y viajes de larga distancia por Cataluña y Andorra con precio fijo garantizado.",
+                stat_fixed: "Precio Fijo",
+                stat_support: "Soporte Directo",
+                stat_rating: "Valoración",
+                calc_title: "Calculadora Instantánea de Ruta",
+                calc_sub: "Selecciona rutas predefinidas o calcula tu distancia",
+                lbl_presets: "Rutas Frecuentes",
+                lbl_origin: "Lugar de Recogida",
+                lbl_destination: "Destino",
+                lbl_date: "Fecha de Recogida",
+                lbl_time: "Hora de Recogida",
+                lbl_vehicle: "Tipo de Vehículo",
+                opt_child_seat: "Silla de Bebé / Niño (+5€)",
+                badge_night: "Tarifa Nocturna Aplicada",
+                lbl_total_price: "Precio Fijo Estimado",
+                lbl_vat: "Impuestos Incluidos",
+                btn_book_whatsapp: "Reservar por WhatsApp",
+                fleet_subtitle: "Nuestra Flota",
+                fleet_title: "Vehículos para Cada Necesidad",
+                btn_select: "Seleccionar Categoría",
+                srv_subtitle: "Servicios",
+                srv_title: "Soluciones de Movilidad Privada",
+                srv1_title: "Traslados al Aeropuerto",
+                srv1_desc: "Seguimiento de vuelo en tiempo real y bienvenida en la terminal con cartel con nombre.",
+                srv2_title: "Corporativo y Eventos",
+                srv2_desc: "Servicio de chófer profesional para el MWC, congresos y visitas de negocios VIP.",
+                srv3_title: "Larga Distancia",
+                srv3_desc: "Viajes directos puerta a puerta a Costa Brava, Sitges, Girona y Andorra.",
+                srv4_title: "Disposición por Horas",
+                srv4_desc: "Conductor dedicado a su servicio para compras, turismo o múltiples paradas."
+            },
+            ca: {
+                nav_calculator: "Calculadora de Tarifa",
+                nav_fleet: "La Nostra Flota",
+                nav_services: "Serveis",
+                nav_why: "Per Què Nosaltres",
+                gh_btn: "Allotjar a GitHub",
+                hero_badge: "Conductors VTC Oficials",
+                hero_title_1: "Transfers Privats",
+                hero_title_2: "A Barcelona i Catalunya",
+                hero_subtitle: "Trasllats a l'aeroport, recorreguts urbans i viatges de llarga distància amb preu fix garantit.",
+                stat_fixed: "Preu Fix",
+                stat_support: "Suport Directe",
+                stat_rating: "Valoració",
+                calc_title: "Calculadora Instantània de Ruta",
+                calc_sub: "Tria rutes predefinides o calcula la teva distància",
+                lbl_presets: "Rutes Freqüents",
+                lbl_origin: "Lloc de Recollida",
+                lbl_destination: "Destinació",
+                lbl_date: "Data de Recollida",
+                lbl_time: "Hora de Recollida",
+                lbl_vehicle: "Tipus de Vehicle",
+                opt_child_seat: "Cadira de Nadó (+5€)",
+                badge_night: "Tarifa Nocturna Aplicada",
+                lbl_total_price: "Preu Fix Estimat",
+                lbl_vat: "Impostos Inclosos",
+                btn_book_whatsapp: "Reservar per WhatsApp",
+                fleet_subtitle: "La Nostra Flota",
+                fleet_title: "Vehicles per a Cada Necessitat",
+                btn_select: "Seleccionar Categoria",
+                srv_subtitle: "Serveis",
+                srv_title: "Solucions de Mobilitat Privada",
+                srv1_title: "Trasllats a l'Aeroport",
+                srv1_desc: "Seguiment de vol en temps real i benvinguda a la terminal amb cartell personalitzat.",
+                srv2_title: "Corporatiu i Esdeveniments",
+                srv2_desc: "Xofer professional per al MWC, congressos i visites de negocis VIP.",
+                srv3_title: "Llarga Distància",
+                srv3_desc: "Viatges directes porta a porta a Costa Brava, Sitges, Girona i Andorra.",
+                srv4_title: "Disposició per Hores",
+                srv4_desc: "Conductor dedicat al seu servei per a compres, turisme o múltiples parades."
+            }
+        };
+
+        // Set Default Date and Time in Inputs
+        document.addEventListener("DOMContentLoaded", () => {
+            const today = new Date();
+            document.getElementById("pickupDate").value = today.toISOString().split("T")[0];
+            const hours = String(today.getHours()).padStart(2, '0');
+            const minutes = String(today.getMinutes()).padStart(2, '0');
+            document.getElementById("pickupTime").value = `${hours}:${minutes}`;
+            calculateFare();
+        });
+
+        // Calculate Fare Function
+        function calculateFare() {
+            const origin = document.getElementById("originSelect").value;
+            const destination = document.getElementById("destSelect").value;
+            const vehicle = document.querySelector('input[name="vehicleClass"]:checked').value;
+            const childSeat = document.getElementById("childSeatCheck").checked;
+            const timeVal = document.getElementById("pickupTime").value;
+
+            // Determine Distance
+            let distance = 25; // Default distance
+            const routeKey1 = `${origin}-${destination}`;
+            const routeKey2 = `${destination}-${origin}`;
+
+            if (origin === destination) {
+                distance = 10;
+            } else if (distanceMatrix[routeKey1]) {
+                distance = distanceMatrix[routeKey1];
+            } else if (distanceMatrix[routeKey2]) {
+                distance = distanceMatrix[routeKey2];
+            } else {
+                distance = 45; // Default long estimate
+            }
+
+            document.getElementById("liveKmTag").innerText = `~${distance} km`;
+
+            // Rate Calculations
+            let baseRate = 25;
+            let perKmRate = 1.6;
+
+            if (vehicle === 'executive') {
+                baseRate = 35;
+                perKmRate = 2.2;
+            } else if (vehicle === 'van') {
+                baseRate = 45;
+                perKmRate = 2.5;
+            }
+
+            let total = baseRate + (distance * perKmRate);
+
+            // Night surcharge check (22:00 to 06:00)
+            const hour = parseInt(timeVal.split(":")[0] || "12");
+            const isNight = hour >= 22 || hour < 6;
+            const nightBadge = document.getElementById("nightRateBadge");
+            
+            if (isNight) {
+                total *= 1.15; // 15% night surcharge
+                nightBadge.classList.remove("hidden");
+            } else {
+                nightBadge.classList.add("hidden");
+            }
+
+            if (childSeat) {
+                total += 5;
+            }
+
+            document.getElementById("totalPrice").innerText = `€${Math.round(total)}`;
+        }
+
+        // Apply Preset Shortcut
+        function applyPreset(orig, dest) {
+            document.getElementById("originSelect").value = orig;
+            document.getElementById("destSelect").value = dest;
+            calculateFare();
+        }
+
+        // Handle Direct WhatsApp Booking Action
+        function handleBooking(e) {
+            e.preventDefault();
+            const originText = document.getElementById("originSelect").options[document.getElementById("originSelect").selectedIndex].text;
+            const destText = document.getElementById("destSelect").options[document.getElementById("destSelect").selectedIndex].text;
+            const date = document.getElementById("pickupDate").value;
+            const time = document.getElementById("pickupTime").value;
+            const vehicle = document.querySelector('input[name="vehicleClass"]:checked').value.toUpperCase();
+            const price = document.getElementById("totalPrice").innerText;
+
+            const phone = "34600000000"; // Target WhatsApp Business Phone
+            const message = `🚕 *NEW TRANSFER BOOKING REQUEST*\n\n` +
+                `📍 *Pickup:* ${originText}\n` +
+                `🏁 *Destination:* ${destText}\n` +
+                `📅 *Date:* ${date}\n` +
+                `⏰ *Time:* ${time}\n` +
+                `🚘 *Vehicle:* ${vehicle}\n` +
+                `💰 *Estimated Fare:* ${price}\n\n` +
+                `Please confirm availability!`;
+
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Language Switcher Function
+        function changeLanguage(lang) {
+            const data = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (data[key]) {
+                    element.innerText = data[key];
+                }
+            });
+        }
+
+        // Toggle GitHub Modal Guide
+        function toggleGithubModal(show) {
+            const modal = document.getElementById("githubModal");
+            if (show) {
+                modal.classList.remove("hidden");
+            } else {
+                modal.classList.add("hidden");
+            }
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        function closeMobileMenu() {
+            mobileMenu.classList.add("hidden");
+        }
+    </script>
+</body>
+</html>
